@@ -4,7 +4,8 @@ const {Actividad} = require('../models');
 const actividadListarTodos = async (req,res=response) =>{
     const actividades = await Actividad.find()
     .populate('mapa')
-    .populate('usuario');
+    .populate('usuario')
+    .populate('proyecto');
     res.status(200).json(actividades);
 }
 
@@ -19,7 +20,8 @@ const actividadObtener = async (req,res=response) =>{
     const {id} = req.params;
     const actividad = await Actividad.findById(id)
         .populate('mapa')
-        .populate('usuario');
+        .populate('usuario')
+        .populate('proyecto');
     res.status(200).json({actividad});
 }
 

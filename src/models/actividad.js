@@ -17,6 +17,10 @@ const ActividadSchema = Schema({
         type:Schema.Types.ObjectId,
         ref:'Usuario',
     },
+    proyecto:{
+        type:Schema.Types.ObjectId,
+        ref:'proyecto',
+    },
     num_areas:{
         type: Number,
         default: 0

@@ -1,4 +1,4 @@
-const {Actividad,Mapa,Proyecto,Usuario} = require('../models');
+const {Actividad,Mapa,Proyecto,Usuario,Blog,Comentario} = require('../models');
 
 const existeActividadId = async(id)=>{
     const existe = await Actividad.findById(id);
@@ -28,6 +28,20 @@ const existeUsuarioId = async(id)=>{
     }
 }
 
+const existeBlogId = async(id)=>{
+    const existe = await Blog.findById(id);
+    if(!existe){
+        throw new Error(`El id de blog ${id} no existe`);
+    }
+}
+
+const existeComentariosId = async(id)=>{
+    const existe = await Comentario.findById(id);
+    if(!existe){
+        throw new Error(`El id de comentario ${id} no existe`);
+    }
+}
+
 const validarMapasExisten = async (mapas) => {
     const mapasIds = mapas.map(mapaId => mapaId.trim()); // Limpia los IDs de posibles espacios en blanco
     const mapasExistentes = await Mapa.find({ _id: { $in: mapasIds } });
@@ -42,6 +56,8 @@ module.exports={
     existeMapaId,
     existeProyectoId,
     existeUsuarioId,
-    validarMapasExisten
+    validarMapasExisten,
+    existeBlogId,
+    existeComentariosId
 }
 

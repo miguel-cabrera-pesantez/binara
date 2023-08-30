@@ -13,6 +13,9 @@ class Server{
             usuarioPath : '/api/usuario',
             proyectoPath : '/api/proyecto',
             actividadPath : '/api/actividad',
+            loginPath : '/api/login',
+            blogPath : '/api/blog',
+            comentarioPath : '/api/comentario',
         };
         this.conectarDB();
         this.middlewares();
@@ -29,7 +32,10 @@ class Server{
         this.app.use(this.paths.mapaPath,require('../routes/mapaRouter'));
         this.app.use(this.paths.usuarioPath,require('../routes/usuarioRouter'));
         this.app.use(this.paths.proyectoPath,require('../routes/proyectoRouter')); 
-        this.app.use(this.paths.actividadPath,require('../routes/actividadRouter'));    
+        this.app.use(this.paths.actividadPath,require('../routes/actividadRouter'));
+        this.app.use(this.paths.loginPath,require('../routes/authRouter'));     
+        this.app.use(this.paths.blogPath,require('../routes/blogRouter'));   
+        this.app.use(this.paths.comentarioPath,require('../routes/comentarioRouter'));   
     }
 
     listen(){
