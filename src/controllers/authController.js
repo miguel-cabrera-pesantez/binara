@@ -2,6 +2,7 @@ const { response, json } = require("express");
 const bcryptjs = require('bcryptjs');
 const {Usuario} = require('../models');
 const { generarJWT } = require("../helpers/generarJWT");
+const { googleVerify } = require("../helpers/googleVerify");
 
 
 const login = async(req,res = response) =>{
@@ -39,36 +40,33 @@ const login = async(req,res = response) =>{
       return res.status(500).json({msg:'Error al autentificar'})
    }
 }
-/*
+
  const  googleSingIn = async(req,res = response) =>{
    const {id_token} = req.body;
 
    try {
-      const {nombre,correo,img} = await googleVerify(id_token);
+      const {nombre,correo} = await googleVerify(id_token);
       let usuario = await Usuario.findOne({correo});
       //si no existe
       if(!usuario){
          const data = {
             nombre,
             correo,
-            password:'velsos',
-            img,
+            password:'*Binara123.',
             google:true
          };
          usuario = new Usuario(data);
          await usuario.save();
       }
 
-      //
-
       // si el usuario DB esta en false por bloqueo , etc
       if(!usuario.estado){
          return res.status(401).json({
-            msg:"hable con diosito por que lo funaron"
+            msg:"Usuario desactivado, hable con el administrador"
          });
       }
       //Generar el jsonwebtoken
-      const token = await generarJWT(usuario.id);
+      const token = await generarJWT(usuario);
       res.json({
          msg:"ok",
          token,
@@ -77,11 +75,10 @@ const login = async(req,res = response) =>{
    } catch (error) {
       res.status(400).json({
          ok:false,
-         msg:'error al autentificar google'
+         msg:'error al autentificar token de google'
       })
    }
-
- }*/
+ }
 
 const renovarToken = async (req,res = response) => {
 
@@ -97,6 +94,6 @@ const renovarToken = async (req,res = response) => {
 
  module.exports = {
    login,
-   //googleSingIn,
+   googleSingIn,
    renovarToken
  }
