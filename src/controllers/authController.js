@@ -28,11 +28,9 @@ const login = async(req,res = response) =>{
 
       //const token = await generarJWT(usuario.id,usuario.rol);
       const token = await generarJWT(usuario);
-
+      res.header('x-token', `${token}`);
       res.json({
-         msg:'Token generado correctamente',
-         usuario,
-         token
+         msg:'ok login'
       });
 
    } catch (error) {
@@ -43,12 +41,12 @@ const login = async(req,res = response) =>{
 
  const  googleSingIn = async(req,res = response) =>{
    const {id_token} = req.body;
-
+   let nuevo =false;
    try {
       const {nombre,correo} = await googleVerify(id_token);
       let usuario = await Usuario.findOne({correo});
       //si no existe
-      if(!usuario){
+      if(!usuario){         
          const data = {
             nombre,
             correo,
@@ -56,9 +54,9 @@ const login = async(req,res = response) =>{
             google:true
          };
          usuario = new Usuario(data);
-         await usuario.save();
+         await usuario.save();  
+         nuevo=true;     
       }
-
       // si el usuario DB esta en false por bloqueo , etc
       if(!usuario.estado){
          return res.status(401).json({
@@ -67,10 +65,11 @@ const login = async(req,res = response) =>{
       }
       //Generar el jsonwebtoken
       const token = await generarJWT(usuario);
+      res.header('x-token', `${token}`);
       res.json({
-         msg:"ok",
-         token,
-         usuario
+         msg:"login ok",
+         nuevo,
+         token
       });
    } catch (error) {
       res.status(400).json({
