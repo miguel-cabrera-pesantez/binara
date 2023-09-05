@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
 const { existeProyectoId, validarMapasExisten } = require('../helpers/idValidador');
-const { proyectoListarTodos, proyectoListarActivos, proyectoObtener, proyectoCrear, proyectoEditar, proyectoDesactivar } = require('../controllers/proyectoController');
+const { proyectoListarTodos, proyectoListarActivos, proyectoObtener, proyectoCrear, proyectoEditar, proyectoDesactivar, proyectoActivar } = require('../controllers/proyectoController');
 const { validarCampos } = require('../middleware/validarCampos');
 const { validarJSON } = require('../middleware/jsonValidador');
 const router = Router();
@@ -52,5 +52,12 @@ router.delete('/:id',[
     check('id').custom(existeProyectoId),
     validarCampos
 ],proyectoDesactivar);
+
+//Activar proyecto
+router.put('/:id/activar', [
+    check('id', 'Id Mongo no válido').isMongoId(),
+    check('id').custom(existeProyectoId),
+    validarCampos
+], proyectoActivar);
 
 module.exports = router;

@@ -68,11 +68,33 @@ const proyectoDesactivar = async (req,res=response) =>{
     });
  }
 
+ const proyectoActivar = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+        const proyecto = await Proyecto.findByIdAndUpdate(id, { visible: true }, { new: true });
+        if (!proyecto) {
+            return res.status(404).json({
+                msg: 'El proyecto no se encontró',
+            });
+        }
+        res.status(200).json({
+            msg: 'Proyecto activado correctamente',
+            proyecto,
+        });
+    } catch (error) {
+        console.error('Error al activar el proyecto:', error);
+        res.status(500).json({
+            msg: 'Error interno del servidor',
+        });
+    }
+};
+
 module.exports={
     proyectoListarTodos,
     proyectoListarActivos,
     proyectoObtener,
     proyectoCrear,
     proyectoEditar,
-    proyectoDesactivar
+    proyectoDesactivar,
+    proyectoActivar
 }
