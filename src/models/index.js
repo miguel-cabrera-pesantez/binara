@@ -4,6 +4,7 @@ const Mapa = require('./mapa');
 const Actividad = require('./actividad');
 const Comentario = require('./comentario');
 const Blog = require('./blog');
+const Parametro = require('./parametro');
 const Server = require('./server');
 
 module.exports ={
@@ -14,4 +15,5 @@ module.exports ={
     Server,
     Comentario,
     Blog,
+    Parametro,
 }

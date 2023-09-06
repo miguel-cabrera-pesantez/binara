@@ -39,7 +39,7 @@ const comentarioEditar = async (req,res=response) =>{
     const {id} = req.params;
     const data = {
         ...req.body,
-        fechaComentario : Date.now,               
+        fechaComentario : Date.now(),               
     };  
     const comentario = await Comentario.findByIdAndUpdate(id,data, {new: true});    
     res.status(201).json({
