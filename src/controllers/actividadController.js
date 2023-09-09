@@ -1,18 +1,37 @@
 const {response} = require('express');
-const {Actividad} = require('../models');
+const {Actividad,Proyecto} = require('../models');
 
 const actividadListarTodos = async (req,res=response) =>{
     const actividades = await Actividad.find()
     .populate('mapa')
     .populate('usuario')
-    .populate('proyecto');
+    .populate({
+        path: 'proyecto',
+        model: Proyecto,
+      });
     res.status(200).json(actividades);
 }
 
 const actividadListarActivos = async (req,res=response) =>{
     const actividad = await Actividad.find({visible:true})
         .populate('mapa')
-        .populate('usuario');
+        .populate('usuario')
+        .populate({
+            path: 'proyecto',
+            model: Proyecto,
+          });
+    res.status(200).json(actividad);
+}
+
+const actividadListarxProyecto = async (req,res=response) =>{
+    const { proyectoId } = req.params;
+    const actividad = await Actividad.find({ proyecto: proyectoId, visible: true })
+        .populate('mapa')
+        .populate('usuario')
+        .populate({
+            path: 'proyecto',
+            model: Proyecto,
+          });
     res.status(200).json(actividad);
 }
 
@@ -65,4 +84,5 @@ module.exports={
     actividadCrear,
     actividadEditar,
     actividadDesactivar,
+    actividadListarxProyecto,
 }

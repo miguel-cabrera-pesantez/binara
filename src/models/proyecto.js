@@ -1,5 +1,4 @@
 const {Schema,model} = require('mongoose');
-const mapa = require('./mapa');
 
 const ProyectoSchema = Schema({
     titulo:{
@@ -50,10 +49,40 @@ const ProyectoSchema = Schema({
     fechaFin:{
         type: Date,
     },
+    num_areas:{
+        type: Number,
+        default: 0
+    },
+    num_personas_beneficiarias:{
+        type: Number,
+        default: 0
+    },
+    num_mujeres_beneficiarias:{
+        type: Number,
+        default: 0
+    },
+    num_niños_niñas_beneficiarias:{
+        type: Number,
+        default: 0
+    },
+    num_adoloscentes_beneficiarios:{
+        type: Number,
+        default: 0
+    },
+    num_adultos_beneficiarios:{
+        type: Number,
+        default: 0
+    },
     visible:{
         type:Boolean,
         default:true,
     }
 });
+
+ProyectoSchema.methods.toJSON = function(){
+    const{__v,password,_id, ...proyecto} = this.toObject();
+    proyecto.uid=_id;
+    return proyecto;
+}
 
 module.exports=model('Proyecto',ProyectoSchema);

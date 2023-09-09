@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { actividadListarTodos, actividadListarActivos, actividadObtener, actividadCrear, actividadEditar, actividadDesactivar } = require('../controllers/actividadController');
-const { existeActividadId, existeMapaId, existeUsuarioId } = require('../helpers/idValidador');
+const { actividadListarTodos, actividadListarActivos, actividadObtener, actividadCrear, actividadEditar, actividadDesactivar, actividadListarxProyecto } = require('../controllers/actividadController');
+const { existeActividadId, existeMapaId, existeUsuarioId, existeProyectoId } = require('../helpers/idValidador');
 const { validarCampos } = require('../middleware/validarCampos');
 const { validarJSON } = require('../middleware/jsonValidador');
 const router = Router();
@@ -30,6 +30,9 @@ router.post('/',[
     check('usuario','Usuario creador requerido').notEmpty(),
     check('usuario', 'ID de usuario no valido').isMongoId(),
     check('usuario').custom(existeUsuarioId),
+    check('proyecto','Proyecto de la actividad requerido').notEmpty(),
+    check('proyecto', 'ID de proyecto no valido').isMongoId(),
+    check('proyecto').custom(existeProyectoId),
     check('visible', 'visible debe ser un valor booleano').optional().isBoolean(),
     validarCampos,
 ],actividadCrear);
@@ -57,5 +60,12 @@ router.delete('/:id',[
     check('id').custom(existeActividadId),
     validarCampos
 ],actividadDesactivar);
+
+// Encuentra una actividad por id de proyectos
+router.get('/xproyecto/:proyectoId',[
+    check('proyectoId','Id Mongo no valido').isMongoId(),
+    check('proyectoId').custom(existeProyectoId),
+    validarCampos,
+],actividadListarxProyecto);
 
 module.exports = router;
