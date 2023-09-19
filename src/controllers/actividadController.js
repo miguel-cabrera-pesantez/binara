@@ -77,6 +77,27 @@ const actividadDesactivar = async (req,res=response) =>{
     });
  }
 
+ const activarActividad = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+        const actividades = await Actividad.findByIdAndUpdate(id, { visible: true }, { new: true });
+        if (!actividades) {
+            return res.status(404).json({
+                msg: 'La actividad no se encontró',
+            });
+        }
+        res.status(201).json({
+            msg: 'Actividad activado correctamente',
+            actividades,
+        });
+    } catch (error) {
+        console.error('Error al activar la actividad:', error);
+        res.status(500).json({
+            msg: 'Error interno del servidor',
+        });
+    }
+};
+
 module.exports={
     actividadListarTodos,
     actividadListarActivos,
@@ -85,4 +106,5 @@ module.exports={
     actividadEditar,
     actividadDesactivar,
     actividadListarxProyecto,
+    activarActividad,
 }

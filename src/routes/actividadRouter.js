@@ -68,4 +68,10 @@ router.get('/xproyecto/:proyectoId',[
     validarCampos,
 ],actividadListarxProyecto);
 
+router.put('/:id/activar', [
+    check('id', 'Id Mongo no válido').isMongoId(),
+    check('id').custom(existeActividadId),
+    validarCampos
+], activarActividad);
+
 module.exports = router;
