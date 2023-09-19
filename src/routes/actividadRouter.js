@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { actividadListarTodos, actividadListarActivos, actividadObtener, actividadCrear, actividadEditar, actividadDesactivar, actividadListarxProyecto } = require('../controllers/actividadController');
+const { actividadListarTodos, actividadListarActivos, actividadObtener, actividadCrear, actividadEditar, actividadDesactivar, actividadListarxProyecto, activarActividad } = require('../controllers/actividadController');
 const { existeActividadId, existeMapaId, existeUsuarioId, existeProyectoId } = require('../helpers/idValidador');
 const { validarCampos } = require('../middleware/validarCampos');
 const { validarJSON } = require('../middleware/jsonValidador');
