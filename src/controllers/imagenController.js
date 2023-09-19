@@ -21,7 +21,6 @@ const mostrarImagen = async (req,res = response) => {
     const {imagen,carpeta} = req.params;
 
     const pathImagen = path.join(__dirname,'../uploads',carpeta,imagen)
-        console.log("🚀 ~ file: imagenController.js:24 ~ mostrarImagen ~ pathImagen:", pathImagen)
         if(fs.existsSync(pathImagen)){
             return res.sendFile(pathImagen);            
         };   
