@@ -17,6 +17,7 @@ class Server{
             blogPath : '/api/blog',
             comentarioPath : '/api/comentario',
             parametroPath : '/api/parametro',
+            imagenPath : '/api/imagen',
         };
         this.conectarDB();
         this.middlewares();
@@ -27,6 +28,11 @@ class Server{
         this.app.use(express.static('public'));
         this.app.use(cors());
         this.app.use(express.json());
+        this.app.use( fileUpload ({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath : true ///para que cree la carpeta si no existe
+        }));
     }
 
     routes(){
@@ -37,7 +43,8 @@ class Server{
         this.app.use(this.paths.loginPath,require('../routes/authRouter'));     
         this.app.use(this.paths.blogPath,require('../routes/blogRouter'));   
         this.app.use(this.paths.comentarioPath,require('../routes/comentarioRouter'));
-        this.app.use(this.paths.parametroPath,require('../routes/parametroRouter'));    
+        this.app.use(this.paths.parametroPath,require('../routes/parametroRouter'));   
+        this.app.use(this.paths.imagenPath,require('../routes/imagenRouter'));   
     }
 
     listen(){

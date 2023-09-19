@@ -58,6 +58,14 @@ const validarMapasExisten = async (mapas) => {
     }
 };
 
+//validar colecciones
+const colecionesPermitidas = (coleccion ='',colecciones=[]) =>{
+    const incluida = colecciones.includes(coleccion);
+    if (!incluida) {throw new Error(`El nombre de la coleccion ${coleccion} no es permitida: ${colecciones}`)};
+    return true;
+}
+
+
 module.exports={
     existeActividadId,
     existeMapaId,
@@ -67,5 +75,6 @@ module.exports={
     existeBlogId,
     existeComentariosId,
     existeParametroId,
+    colecionesPermitidas,
 }
 
