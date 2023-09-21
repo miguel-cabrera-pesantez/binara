@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
 const {validarCampos, validarArchivoSubir} = require('../middleware');
-const { cargarArchivo, mostrarImagen } = require('../controllers/imagenController');
+const { cargarArchivo, mostrarImagen, borrarImagen } = require('../controllers/imagenController');
 const { colecionesPermitidas } = require('../helpers/idValidador');
 
 const router = Router();
@@ -19,5 +19,12 @@ check('carpeta','carpeta erronea').custom(c=> colecionesPermitidas(c,['blog','pa
 validarCampos],
 mostrarImagen
 )
+
+router.delete('/:carpeta/:id',[
+    check('id','Id no mongovalido').isMongoId(),
+    check('carpeta','carpeta erronea').custom(c=> colecionesPermitidas(c,['blog','parametro','proyecto'])),
+    validarCampos],
+    borrarImagen
+    )
 
 module.exports = router;
