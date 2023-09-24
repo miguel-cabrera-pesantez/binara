@@ -43,9 +43,10 @@ const blogEditar = async (req,res=response) =>{
 
 const blogDesactivar = async (req,res=response) =>{
     const {id} =req.params;
-    const blog = await Blog.findByIdAndUpdate(id,{visible:false}, {new: true});
+    const {visible} = await Blog.findById(id,'visible');//recogo el valor actual
+    const blog = await Blog.findByIdAndUpdate(id,{visible:!visible}, {new: true});
     res.status(201).json({
-        msg:'Blog desactivado correctamente: ',
+        msg:'Blog activado/desactivado correctamente: ',
         blog
     });
  }
