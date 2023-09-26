@@ -5,18 +5,26 @@ const BlogSchema = Schema({
         type: String,
         require: [true,'titulo requerido'],
     },
-    fechaPublicacion:{
+    fecha:{
         type: Date,
         default: Date.now,
     },
-    autores:{
-        type: [String],
-        default: ['Sin Autor']
+    nombre_autor:{
+        type: String
+    },
+    apellido_autor:{
+        type: String,
+    },
+    email_autor:{
+        type: String,
     },
     foto:{
         type: String,
     },
-    texto:{
+    parrafo:{
+        type: String,
+    },
+    bibliografia:{
         type: String,
     },
     visible:{

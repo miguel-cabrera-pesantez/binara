@@ -22,7 +22,7 @@ router.get('/:id',[
 router.post('/',[
     validarJSON,
     check('titulo','Titulo requerido').notEmpty(),
-    check('texto','Contexto del blog requerido').notEmpty(),
+    check('parrafo','Contexto del blog requerido').notEmpty(),
     check('visible', 'visible debe ser un valor booleano').isBoolean(),   
     validarCampos,
 ],blogCrear);
