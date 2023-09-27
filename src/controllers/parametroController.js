@@ -12,6 +12,12 @@ const parametroObtener = async (req,res=response) =>{
     res.status(200).json({parametro});
 }
 
+const parametroObtenerxLlave = async (req,res=response) =>{
+    const {llave} = req.params;
+    const parametros = await Parametro.find({ llave: llave });
+    res.status(200).json({parametros});
+}
+
 const parametroCrear = async (req,res=response) =>{
     const data = {
         ...req.body,         
@@ -54,4 +60,5 @@ module.exports={
     parametroCrear,
     parametroEditar,
     parametroDesactivar,
+    parametroObtenerxLlave,
 }

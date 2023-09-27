@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { parametroListar, parametroObtener, parametroCrear, parametroEditar, parametroDesactivar } = require('../controllers/parametroController');
+const { parametroListar, parametroObtener, parametroCrear, parametroEditar, parametroDesactivar, parametroObtenerxLlave } = require('../controllers/parametroController');
 const { existeParametroId } = require('../helpers/idValidador');
 const { validarCampos, validarJSON } = require('../middleware');
 const router = Router();
@@ -14,6 +14,12 @@ router.get('/:id',[
     check('id').custom(existeParametroId),
     validarCampos,
 ],parametroObtener);
+
+// Encuentra un parametro por llave
+router.get('/:llave',[
+    check('llave','Llave requerida').notEmpty(),
+    validarCampos,
+],parametroObtenerxLlave);
 
 // Crea un parametro
 router.post('/',[
