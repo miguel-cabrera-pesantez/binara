@@ -16,7 +16,7 @@ router.get('/:id',[
 ],parametroObtener);
 
 // Encuentra un parametro por llave
-router.get('/:llave',[
+router.get('/llave/:llave',[
     check('llave','Llave requerida').notEmpty(),
     validarCampos,
 ],parametroObtenerxLlave);
