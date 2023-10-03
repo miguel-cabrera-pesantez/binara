@@ -18,6 +18,7 @@ class Server{
             comentarioPath : '/api/comentario',
             parametroPath : '/api/parametro',
             imagenPath : '/api/imagen',
+            mailPath : '/api/mail',
         };
         this.conectarDB();
         this.middlewares();
@@ -44,7 +45,8 @@ class Server{
         this.app.use(this.paths.blogPath,require('../routes/blogRouter'));   
         this.app.use(this.paths.comentarioPath,require('../routes/comentarioRouter'));
         this.app.use(this.paths.parametroPath,require('../routes/parametroRouter'));   
-        this.app.use(this.paths.imagenPath,require('../routes/imagenRouter'));   
+        this.app.use(this.paths.imagenPath,require('../routes/imagenRouter'));
+        this.app.use(this.paths.mailPath,require('../routes/mailSendRouter'));     
     }
 
     listen(){
