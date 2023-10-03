@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { comentarioListar, comentariosBlog, comentarioObtener, comentarioCrear, comentarioDesactivar } = require('../controllers/comentarioController');
+const { comentarioListar, comentariosBlog, comentarioObtener, comentarioCrear, comentarioDesactivar, comentarioObtenerUsuario } = require('../controllers/comentarioController');
 const { existeBlogId, existeComentariosId, existeUsuarioId } = require('../helpers/idValidador');
 const { validarCampos, validarJSON } = require('../middleware');
 const router = Router();
@@ -14,6 +14,13 @@ router.get('/xblog/:id',[
     check('id').custom(existeBlogId),
     validarCampos,
 ],comentariosBlog);
+
+// Lista todos los comentarios por blog
+router.get('/xusuario/:id',[
+    check('id','Id Mongo no valido').isMongoId(),
+    check('id').custom(existeUsuarioId),
+    validarCampos,
+],comentarioObtenerUsuario);
 
 // Encuentra un comentario por id
 router.get('/:id',[

@@ -3,6 +3,7 @@ const {Comentario} = require('../models');
 
 const comentarioListar = async (req,res=response) =>{
     const comentarios = await Comentario.find()
+    .populate('usuario')
     .populate('blog');
     res.status(200).json(comentarios);
 }
@@ -10,6 +11,7 @@ const comentarioListar = async (req,res=response) =>{
 const comentariosBlog = async (req,res=response) =>{
     const {id} = req.params;
     const comentarios = await Comentario.find({ blog: id })
+    .populate('usuario')
     .populate('blog');
     res.status(200).json(comentarios);
 }
@@ -17,6 +19,7 @@ const comentariosBlog = async (req,res=response) =>{
 const comentarioObtener = async (req,res=response) =>{
     const {id} = req.params;
     const comentario = await Comentario.findById(id)
+        .populate('usuario')
         .populate('blog');
     res.status(200).json({comentario});
 }
@@ -57,11 +60,20 @@ const comentarioDesactivar = async (req,res=response) =>{
     });
  }
 
+ const comentarioObtenerUsuario = async (req,res=response) =>{
+    const {id} = req.params;
+    const comentario = await Comentario.find({ usuario: id })
+        .populate('usuario')
+        .populate('blog');
+    res.status(200).json({comentario});
+}
+
 module.exports={
     comentarioListar,
     comentariosBlog,
     comentarioObtener,
     comentarioCrear,
     comentarioEditar,
-    comentarioDesactivar
+    comentarioDesactivar,
+    comentarioObtenerUsuario,
 }
